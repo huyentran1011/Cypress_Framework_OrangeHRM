@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress";
 import fs from 'fs';
 import path from 'path';
+// import mysql from "mysql2/promise";
 import type { RowDataPacket, OkPacket } from 'mysql2';
 
 const mysql = require('mysql2');
@@ -8,7 +9,11 @@ const mysql = require('mysql2');
 export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:86/orangehrm5',
+    env: {
+      envName: 'qa'
+    },
     setupNodeEvents(on, config) {
+
       /**  The connection strings for different databases could come from the Cypress configuration or from environment variables */
       const connections = {
         stagingA: {
@@ -52,6 +57,7 @@ export default defineConfig({
       }
       /** Register mochawesome reporter */
       require("cypress-mochawesome-reporter/plugin")(on);
+
       return config;
 
     },
