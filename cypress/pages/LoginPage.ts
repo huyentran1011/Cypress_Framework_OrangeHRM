@@ -43,7 +43,6 @@ export class LoginPage extends BasePage {
 
     verifyUsernameErrorMessage(errorMessage: string) {
         return this.usernameTbx.shouldHaveErrorMessage(errorMessage);
-
     }
 
     verifyUsernameErrorMsgColor(value: string) {

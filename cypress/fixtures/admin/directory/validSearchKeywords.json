@@ -1,0 +1,46 @@
+[
+    {
+        "testName": "Search Directory user with only jobTitle",
+        "inputData": {
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "jobTitle": "Java Developer",
+            "location": ""
+        },
+        "expectedResult": {}
+    },
+    {
+        "testName": "Search Directory user with only Location",
+        "inputData": {
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "jobTitle": "",
+            "location": "Dallas Branch"
+        },
+        "expectedResult": {}
+    },
+    {
+        "testName": "Search Directory user with only Employee Name",
+        "inputData": {
+            "employeeFirstName": "Andrew",
+            "employeeMiddleName": "",
+            "employeeLastName": "Anderson",
+            "jobTitle": "",
+            "location": ""
+        },
+        "expectedResult": {}
+    },
+    {
+        "testName": "Search Directory user with all criterias",
+        "inputData": {
+            "employeeFirstName": "Andrew",
+            "employeeMiddleName": "",
+            "employeeLastName": "Anderson",
+            "jobTitle": "Sales",
+            "location": "Dallas Branch"
+        },
+        "expectedResult": {}
+    }
+]

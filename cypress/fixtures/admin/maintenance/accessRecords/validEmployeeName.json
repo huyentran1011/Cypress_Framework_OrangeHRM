@@ -1,0 +1,24 @@
+[
+    {
+        "testName": "Search with valid Employee Name (Firstname - Lastname)",
+        "inputData": {
+            "employeeFirstName": "Anna",
+            "employeeMiddleName": "",
+            "employeeLastName": "Le"
+        },
+        "expectedResult": {
+            "employeeID": "0116"
+        }
+    },
+    {
+        "testName": "Search with valid Employee Name (Firstname - Middlenname - Lastname)",
+        "inputData": {
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill"
+        },
+          "expectedResult": {
+            "employeeID": "0114"
+        }
+    }
+]

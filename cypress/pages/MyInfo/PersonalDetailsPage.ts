@@ -13,8 +13,8 @@ export class PersonalDetailsPage extends BasePage {
     licenseExpDateTbx = new Textbox('License Expiry Date');
     dateOfBirthTbx = new Textbox('Date of Birth');
     genderRadioBtn = new RadioButton();
-    nationalityDdm = new DropdownMenu('Nationality');
-    maritalStatusDdm = new DropdownMenu('Marital Status');
+    nationalityDdl = new DropdownMenu('Nationality');
+    maritalStatusDdl = new DropdownMenu('Marital Status');
     saveBtn = new Button('Save');
     addBtn = new Button('Add');
     toastMsg = new ToastMessage();
@@ -56,15 +56,15 @@ export class PersonalDetailsPage extends BasePage {
     }
 
     selectNationality(nationalityValue: string) {
-        this.nationalityDdm.selectOption(nationalityValue);
+        this.nationalityDdl.selectOption(nationalityValue);
 
     }
 
     selectMaritalStatus(maritalStatusValue: string) {
-        this.maritalStatusDdm.selectOption(maritalStatusValue);
+        this.maritalStatusDdl.selectOption(maritalStatusValue);
     }
 
-    selectGender(gender: "Male" | "Female") {
+    selectGender(gender: string) {
         this.genderRadioBtn.selectByLabel(gender);
     }
 
@@ -132,6 +132,7 @@ export class PersonalDetailsPage extends BasePage {
     }
 
     verifyDriverLicenseNoValue(driverLicenseNo: string) {
+        driverLicenseNo === null ? driverLicenseNo = '' : driverLicenseNo;
         this.driverLicenseTbx.shouldHaveValue(driverLicenseNo);
     }
 
@@ -140,11 +141,11 @@ export class PersonalDetailsPage extends BasePage {
     }
 
     verifyNationalityValue(nationality: string) {
-        this.nationalityDdm.shouldHaveValue(nationality);
+        this.nationalityDdl.shouldHaveValue(nationality);
     }
 
     verifyMaritalStatusValue(maritalStatus: string) {
-        this.maritalStatusDdm.shouldHaveValue(maritalStatus);
+        this.maritalStatusDdl.shouldHaveValue(maritalStatus);
     }
 
     verifyDateOfBirthValue(dateOfBirth: string) {

@@ -1,0 +1,36 @@
+[
+    {
+        "testName": "Create a user with valid Data",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "Maica12222025",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "toastTitle": "Success",
+            "toastMessage": "Successfully Saved",
+            "pageURL": "/admin/viewSystemUsers"
+        }
+    },
+    {
+        "testName": "Cancel creating new user",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Liam",
+            "employeeMiddleName": "",
+            "employeeLastName": "Anderson",
+            "status": "Enabled",
+            "username": "Liam12222025",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "pageURL": "/admin/viewSystemUsers"
+        }
+    }
+]

@@ -1,0 +1,40 @@
+{
+    "inputDataForCreateUser": {
+        "userRole": "ESS",
+        "employeeFirstName": "Alexander",
+        "employeeMiddleName": "",
+        "employeeLastName": "Gills",
+        "status": "Enabled",
+        "username": "alexander12252025",
+        "password": "Qwerty123@",
+        "confirmPassword": "Qwerty123@"
+    },
+    "expectedResultForCreateUser": {
+        "toastTitle": "Success",
+        "toastMessage": "Successfully Saved",
+        "pageURL": "/admin/viewSystemUsers"
+    },
+    "inputDataForEditUser": {
+        "userRole": "Admin",
+        "employeeFirstName": "Alexander",
+        "employeeMiddleName": "",
+        "employeeLastName": "Gills",
+        "status": "Enabled",
+        "username": "alexander1225",
+        "password": "Qwerty123@",
+        "confirmPassword": "Qwerty123@"
+    },
+    "expectedResultForEditUser": {
+        "toastTitle": "Success",
+        "toastMessage": "Successfully Updated",
+        "pageURL": "/admin/viewSystemUsers"
+    },
+    "expectedResultForDeleteUser": {
+        "toastTitle": "Success",
+        "toastMessage": "Successfully Deleted"
+    },
+    "expectedResultForSearchingDeletedUser": {
+        "toastTitle": "Info",
+        "toastMessage": "No Records Found"
+    }
+}

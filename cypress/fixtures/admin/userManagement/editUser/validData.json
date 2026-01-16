@@ -1,0 +1,37 @@
+[
+    {
+        "testName": "Cancel editing user",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "ESS",
+            "employeeFirstName": "Liam",
+            "employeeMiddleName": "",
+            "employeeLastName": "Hikes",
+            "status": "Enabled",
+            "username": "Liam12222025",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "pageURL": "/admin/viewSystemUsers"
+        }
+    },
+    {
+        "testName": "Edit a user with valid Data",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "Admin",
+            "employeeFirstName": "Liam",
+            "employeeMiddleName": "",
+            "employeeLastName": "Hikes",
+            "status": "Enabled",
+            "password": "Qwerty678@",
+            "confirmPassword": "Qwerty678@"
+        },
+        "expectedResult": {
+            "toastTitle": "Success",
+            "toastMessage": "Successfully Updated",
+            "pageURL": "/admin/viewSystemUsers"
+        }
+    }
+]

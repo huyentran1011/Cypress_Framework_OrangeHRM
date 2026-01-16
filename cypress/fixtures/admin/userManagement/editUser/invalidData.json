@@ -1,0 +1,112 @@
+[
+    {
+        "testName": "Edit a user with User Role is blank",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "",
+            "employeeFirstName": "NOT CHANGE",
+            "employeeMiddleName": "NOT CHANGE",
+            "employeeLastName": "NOT CHANGE",
+            "status": "NOT CHANGE",
+            "username": "NOT CHANGE"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "Required",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usernameErrorMsg": ""
+        }
+    },
+    {
+        "testName": "Edit a user with Employee Name is blank",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "NOT CHANGE",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": "NOT CHANGE",
+            "username": "NOT CHANGE"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "Required",
+            "statusErrorMsg": "",
+            "usernameErrorMsg": "",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Edit a user with Status is blank",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "NOT CHANGE",
+            "employeeFirstName": "NOT CHANGE",
+            "employeeMiddleName": "NOT CHANGE",
+            "employeeLastName": "NOT CHANGE",
+            "status": "",
+            "username": "NOT CHANGE"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "Required",
+            "usernameErrorMsg": ""
+        }
+    },
+    {
+        "testName": "Edit a user with Username is blank",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "NOT CHANGE",
+            "employeeFirstName": "NOT CHANGE",
+            "employeeMiddleName": "NOT CHANGE",
+            "employeeLastName": "NOT CHANGE",
+            "status": "NOT CHANGE",
+            "username": ""
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usernameErrorMsg": "Required"
+        }
+    },
+    {
+        "testName": "Edit a user with Username is less than 5 character",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "NOT CHANGE",
+            "employeeFirstName": "NOT CHANGE",
+            "employeeMiddleName": "NOT CHANGE",
+            "employeeLastName": "NOT CHANGE",
+            "status": "NOT CHANGE",
+            "username": "An1@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usernameErrorMsg": "Should be at least 5 characters"
+        }
+    },
+    {
+        "testName": "Edit a user with an existed Username",
+        "inputData": {
+            "usernameForSearching": "Andrew3108",
+            "userRole": "NOT CHANGE",
+            "employeeFirstName": "NOT CHANGE",
+            "employeeMiddleName": "NOT CHANGE",
+            "employeeLastName": "NOT CHANGE",
+            "status": "NOT CHANGE",
+            "username": "alex35472"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usernameErrorMsg": "Already exists"
+        }
+    }
+]
+

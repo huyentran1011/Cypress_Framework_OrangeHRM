@@ -11,6 +11,7 @@
     "target": "esnext",
     "types": ["cypress", "node"],
     "lib": ["dom", "es6"],
+    "resolveJsonModule": true,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],

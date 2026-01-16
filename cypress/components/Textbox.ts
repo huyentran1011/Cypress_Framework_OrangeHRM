@@ -4,12 +4,14 @@ export class Textbox {
     constructor(private labelText: string) { }
 
     private root() {
-        return cy.contains('label', this.labelText)
+        
+        // return cy.contains('label', this.labelText)
+        //     .closest('div.oxd-input-group');
+        return cy.get('label').filter((_, el) => el.innerText.trim() === this.labelText)
             .closest('div.oxd-input-group');
     }
 
     private input() {
-        // return this.root().find('input.oxd-input--active');
         return this.root().find('input');
     }
 
@@ -21,6 +23,10 @@ export class Textbox {
         return this.input()
             .clear()
             .type(value);
+    }
+
+    clear(){
+        this.input().clear();
     }
 
     shouldHaveValue(expectedValue: string) {
@@ -54,7 +60,7 @@ export class Textbox {
 
     shouldHaveErrorMessage(expectedMessage: string) {
         return this.errorMessage()
-            .should('have.text', expectedMessage);
+            .should('have.text', expectedMessage, {timeout: 4000});
     }
 
     shouldErrorMessageColor(color: string) {

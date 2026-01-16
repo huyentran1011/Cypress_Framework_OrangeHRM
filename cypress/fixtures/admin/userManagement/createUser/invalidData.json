@@ -1,0 +1,310 @@
+[
+    {
+        "testName": "Create a user with User Role is blank",
+        "inputData": {
+            "userRole": "",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "Testing123",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "Required",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Employee Name is blank",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": "Enabled",
+            "username": "Testing123",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "Required",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Status is blank",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "",
+            "username": "Testing123",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "Required",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Username is blank",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "Required",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Username is less than 5 character",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "Should be at least 5 characters",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+        {
+        "testName": "Create a user with an existed Username",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "Aiden40710",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "Already exists",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Password is blank",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "",
+            "confirmPassword": "Qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "Passwords do not match",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Confirm Password is blank",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "Qwerty123@",
+            "confirmPassword": ""
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "Required",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Password and Confirm Password are less than 8 characters",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "Qw2@",
+            "confirmPassword": "Qw2@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "Should have at least 8 characters",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+        {
+        "testName": "Create a user with Password and Confirm Password are missing lowercase character",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "QWERTY123@",
+            "confirmPassword": "QWERTY123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "Your password must contain a lower-case letter, an upper-case letter, a digit and a special character. Try a different password",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Password and Confirm Password are missing uppercase character",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "qwerty123@",
+            "confirmPassword": "qwerty123@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "Your password must contain a lower-case letter, an upper-case letter, a digit and a special character. Try a different password",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Password and Confirm Password are missing digit.",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "qwertyu@",
+            "confirmPassword": "qwertyu@"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "Your password must contain a lower-case letter, an upper-case letter, a digit and a special character. Try a different password",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Create a user with Password and Confirm Password are missing special character.",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "qwerty123",
+            "confirmPassword": "qwerty123"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "Your password must contain a lower-case letter, an upper-case letter, a digit and a special character. Try a different password",
+            "confirmPasswordErrorMsg": "",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+     {
+        "testName": "Create a user with Password and Confirm Password are missing special character.",
+        "inputData": {
+            "userRole": "ESS",
+            "employeeFirstName": "Maica",
+            "employeeMiddleName": "Alisa",
+            "employeeLastName": "Gill",
+            "status": "Enabled",
+            "username": "gio1",
+            "password": "Qwerty123@",
+            "confirmPassword": "Qwerty123#"
+        },
+        "expectedResult": {
+            "userRoleErrorMsg": "",
+            "employeeNameErrorMsg": "",
+            "statusErrorMsg": "",
+            "usenameErrorMsg": "",
+            "passwordErrorMsg": "",
+            "confirmPasswordErrorMsg": "Passwords do not match",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    }
+]

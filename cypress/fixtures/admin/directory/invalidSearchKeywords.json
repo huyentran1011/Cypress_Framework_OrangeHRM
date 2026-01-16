@@ -1,0 +1,72 @@
+[
+    {
+        "testName": "Search Directory user with invalid Employee Name and other criteria",
+        "inputData": {
+            "employeeFirstName": "John",
+            "employeeMiddleName": "",
+            "employeeLastName": "Wick",
+            "jobTitle": "Java Developer",
+            "location": "Dallas Branch"
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Search Directory user with only invalid Employee Name",
+        "inputData": {
+            "employeeFirstName": "John",
+            "employeeMiddleName": "",
+            "employeeLastName": "Wick",
+            "jobTitle": "",
+            "location": ""
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Search Directory user with only invalid First Name",
+        "inputData": {
+            "employeeFirstName": "Ambika",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "jobTitle": "",
+            "location": ""
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Search Directory user with invalid First Name ****",
+        "inputData": {
+            "employeeFirstName": "*****",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "jobTitle": "",
+            "location": ""
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Search Directory user with invalid First Name !@#$%^",
+        "inputData": {
+            "employeeFirstName": "!@#$%^",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "jobTitle": "",
+            "location": ""
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    }
+]

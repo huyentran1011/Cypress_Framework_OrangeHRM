@@ -1,0 +1,32 @@
+[
+    {
+        "testName": "Searching with only Employee name and it is not existed",
+        "inputData": {
+            "username": "",
+            "userRole": "",
+            "employeeFirstName": "John",
+            "employeeMiddleName": "",
+            "employeeLastName": "Wick",
+            "status": ""
+        },
+        "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Searching with multiple criterias and Employee name is not existed",
+        "inputData": {
+            "username": "alex35472",
+            "userRole": "ESS",
+            "employeeFirstName": "John",
+            "employeeMiddleName": "",
+            "employeeLastName": "Wick",
+            "status": "Enabled"
+        },
+         "expectedResult": {
+            "errorMessage": "Invalid",
+            "textColor":"rgb(235, 9, 16)"
+        }
+    }
+]

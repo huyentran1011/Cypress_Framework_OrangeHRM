@@ -1,34 +1,35 @@
 import { dashboard } from "../pages/DashboardPage.ts";
-import { loginPage } from "../pages/LoginPage.ts";
+import { ultils } from "../utils/utilities.ts";
 
-const roles = [
-    {
-        role: 'user',
-        username: 'anna1011',
-        password: 'Annatran1011@X',
-        widgets: ['Time At Work', 'My Actions', 'Quick Launch', 'Employees on Leave Today']
-    },
-    {
-        role: 'admin',
-        username: 'automationfc',
-        password: 'orangehrm5@X',
-        widgets: ['Time At Work', 'My Actions', 'Quick Launch', 'Employees on Leave Today', 'Employee Distribution by Sub Unit', 'Employee Distribution by Location',]
-    }
+let widgetsData: any;
 
-];
+describe("Dashboard Page Widgets under User role ", () => {
 
-roles.forEach(({ role, username, password, widgets }) => {
-    describe(`Dashboard Page Widgets - ${role}`, () => {
-
-        beforeEach(() => {
-            loginPage.loginToSystem(username, password);
-        })
+    before(() => {
+        cy.fixture('dashboard/widgetsForUser').then(data => widgetsData = data);
+        cy.loginAsUser();
+    })
 
 
-        it('Verify Widget Headers on Dashboard page', () => {
-            dashboard.verifyWidgetHeaderShouldExist(widgets);
-        });
-
+    it('Verify Widget Headers on Dashboard page under User role', () => {
+        dashboard.verifyWidgetHeaderShouldExist(widgetsData.widgetHeaders);
     });
 
 })
+
+
+describe("Dashboard Page Widgets under Admin role", () => {
+
+    before(() => {
+        cy.fixture('dashboard/widgetsForAdmin').then(data => widgetsData = data);
+        cy.loginAsAdmin();
+    })
+
+
+    it('Verify Widget Headers on Dashboard page under Admin role', () => {
+        dashboard.verifyWidgetHeaderShouldExist(widgetsData.widgetHeaders);
+    });
+
+})
+
+

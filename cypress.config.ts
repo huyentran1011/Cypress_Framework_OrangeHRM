@@ -1,10 +1,8 @@
 import { defineConfig } from "cypress";
 import fs from 'fs';
 import path from 'path';
-// import mysql from "mysql2/promise";
-import type { RowDataPacket, OkPacket } from 'mysql2';
+import mysql from 'mysql2/promise';
 
-const mysql = require('mysql2');
 
 export default defineConfig({
   e2e: {
@@ -13,40 +11,45 @@ export default defineConfig({
       envName: 'qa'
     },
     setupNodeEvents(on, config) {
+      let connection: any;
 
-      /**  The connection strings for different databases could come from the Cypress configuration or from environment variables */
-      const connections = {
-        stagingA: {
-          host: '127.0.0.1',
-          port: 3309,
-          user: 'root',
-          password: '12345',
-          database: 'orangehrm5',
-        },
-        stagingB: {
-          host: 'localhost',
-          port: 3309,
-          user: 'root',
-          password: '12345',
-          database: 'orangehrm5',
-        },
-      }
+      // on('task', {
+      //   async queryDatabase({ query, values }) {
+      //     if (!connection) {
+      //       connection = await mysql.createConnection({
+      //         host: 'localhost',
+      //         port: 3309,
+      //         user: 'root',
+      //         password: '12345',
+      //         database: 'orangehrm5'
+      //       });
+      //     }
 
-      /** Connecting the database from Node */
-      const connection = mysql.createConnection(connections.stagingA);
+      //     const [rows] = await connection.execute(query, values);
+      //     return rows;
+      //   }
+      // }); 
 
-      /** Register queryDatabase task */
+      const pool = mysql.createPool({
+        host: 'localhost',
+        port: 3309,
+        user: 'root',
+        password: '12345',
+        database: 'orangehrm5',
+        waitForConnections: true,
+        connectionLimit: 5,
+        queueLimit: 0
+      });
+
       on('task', {
-        // destructure the argument into the individual fields
-        queryDatabase({ query }) {
-          return new Promise((resolve, reject) => {
-            connection.query(query, (error: Error | null, results: RowDataPacket[] | OkPacket) => {
-              if (error) {
-                return reject(error);
-              }
-              resolve(results);
-            });
-          });
+        async queryDatabase({ query, values }) {
+          try {
+            const [rows] = await pool.execute(query, values);
+            return rows;
+          } catch (err) {
+            console.error('Database Task Error:', err);
+            throw err;
+          }
         }
       });
 
@@ -86,4 +89,4 @@ export default defineConfig({
     screenshotsDir: "",
     videosFolderDir: "",
   },
-});
+})

@@ -1,0 +1,60 @@
+[
+    {
+        "testName": "Delete a single User",
+        "inputData": [
+            {
+                "empNumber": 51,
+                "userRole": "ESS",
+                "employeeFirstName": "Alisa",
+                "employeeMiddleName": "",
+                "employeeLastName": "Bieber",
+                "status": "Enabled",
+                "username": "Alisa93696",
+                "password": "Qwerty123@"
+            }
+        ],
+        "expectedResult": {
+            "toastTitle": "Success",
+            "toastMessage": "Successfully Deleted"
+        }
+    },
+    {
+        "testName": "Delete multiple Users",
+        "inputData": [
+            {
+                "empNumber": 61,
+                "userRole": "ESS",
+                "employeeFirstName": "Aiden",
+                "employeeMiddleName": "",
+                "employeeLastName": "Bieber",
+                "status": "Enabled",
+                "username": "Aiden40711",
+                "password": "Qwerty123@"
+            },
+            {
+                "empNumber": 109,
+                "userRole": "ESS",
+                "employeeFirstName": "Angela",
+                "employeeMiddleName": "",
+                "employeeLastName": "Anderson",
+                "status": "Enabled",
+                "username": "Angela83325",
+                "password": "Qwerty123@"
+            },
+            {
+                "empNumber": 83,
+                "userRole": "Admin",
+                "employeeFirstName": "Cameron",
+                "employeeMiddleName": "",
+                "employeeLastName": "Anderson",
+                "status": "Enabled",
+                "username": "Cameron15221",
+                "password": "Qwerty123@"
+            }
+        ],
+        "expectedResult": {
+            "toastTitle": "Success",
+            "toastMessage": "Successfully Deleted"
+        }
+    }
+]

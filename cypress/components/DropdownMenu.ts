@@ -11,6 +11,10 @@ export class DropdownMenu {
             .find('div.oxd-select-text-input');
     }
 
+    private errorMessage() {
+        return this.container().children('span.oxd-input-field-error-message');
+    }
+
     open() {
         return this.container().click();
     }
@@ -22,5 +26,15 @@ export class DropdownMenu {
 
     shouldHaveValue(expectedValue: string) {
         return this.dropdown().should('contain.text', expectedValue);
+    }
+
+    shouldHaveErrorMessage(expectedMessage: string) {
+        return this.errorMessage()
+            .should('have.text', expectedMessage);
+    }
+
+    shouldErrorMessageColor(color: string) {
+        return this.errorMessage()
+            .should('have.css', 'color', color);
     }
 }

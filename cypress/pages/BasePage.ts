@@ -14,8 +14,12 @@ export abstract class BasePage {
         return cy.title();
     }
 
-    backToPreviousPage(){
+    backToPreviousPage() {
         return cy.go('back');
+    }
+
+    reloadPage() {
+        return cy.reload({ timeout: 10000 });
     }
 
     /** ACTIONS ON ELEMENT */
@@ -48,7 +52,7 @@ export abstract class BasePage {
 
     shouldElementsHaveValues(element: Cypress.Chainable<JQuery<HTMLElement>>, expectedValues: Array<string>) {
         const actualValues: string[] = [];
-       return element.each(($el) => {
+        return element.each(($el) => {
             actualValues.push($el.text().trim());
         }).then(() => {
             expect(actualValues).to.deep.equal(expectedValues);

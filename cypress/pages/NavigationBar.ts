@@ -1,10 +1,6 @@
 import { BasePage } from "./BasePage.ts";
 
 export class NavigationBar extends BasePage {
-
-    //** COMPONENT LOCATORS */
-
-
     //** PAGE ONLY LOCATORS */
     private menuItems() {
         return cy.get('a.oxd-main-menu-item');

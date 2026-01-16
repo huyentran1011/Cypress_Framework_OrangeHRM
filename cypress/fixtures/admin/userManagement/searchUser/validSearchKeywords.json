@@ -1,0 +1,57 @@
+[
+    {
+        "testName": "Searching with only username",
+        "inputData": {
+            "username": "alex35472",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        }
+    },
+    {
+        "testName": "Searching with only Employee Name",
+        "inputData": {
+            "username": "",
+            "userRole": "",
+            "employeeFirstName": "Alex",
+            "employeeMiddleName": "",
+            "employeeLastName": "Smith",
+            "status": ""
+        }
+    },
+    {
+        "testName": "Searching with only User Role",
+        "inputData": {
+            "username": "",
+            "userRole": "ESS",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        }
+    },
+    {
+        "testName": "Searching with only Status",
+        "inputData": {
+            "username": "",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": "Enabled"
+        }
+    },
+    {
+        "testName": "Searching with all criterias",
+        "inputData": {
+            "username": "alex35472",
+            "userRole": "ESS",
+            "employeeFirstName": "Alex",
+            "employeeMiddleName": "",
+            "employeeLastName": "Smith",
+            "status": "Enabled"
+        }
+    }
+]

@@ -2,17 +2,20 @@ import { Textbox } from "../../components/Textbox.ts";
 import { Button } from "../../components/Button.ts";
 import { DropdownMenu } from "../../components/DropdownMenu.ts";
 import { BasePage } from "../BasePage.ts";
+import type { DirectoryEmployee } from "../../support/database/employee/employee.types.ts";
 import 'cypress-wait-until';
+import { utils } from "../../utils/utilities.ts";
+
 
 export class DirectoryPage extends BasePage {
-    //** COMPONENT LOCATORS */
+    /** COMPONENT LOCATORS */
     employeeNameTbx = new Textbox('Employee Name');
     jobTitleDbx = new DropdownMenu('Job Title');
     locationDbx = new DropdownMenu('Location');
     searchBtn = new Button('Search');
     resetBtn = new Button('Reset');
 
-    //** PAGE ONLY LOCATORS */
+    /** PAGE ONLY LOCATORS */
     private pageHeader() {
         return cy.get('h5.oxd-table-filter-title');
     }
@@ -40,24 +43,37 @@ export class DirectoryPage extends BasePage {
     private locationInDirectoryCard = 'p.orangehrm-directory-card-description';
 
     //** ACTIONS */
-    enterEmployeeName(employeeName: string) {
+    enterEmployeeName(empFirstname: string, empMiddlename: string, empLastname: string) {
+        const employeeName = [empFirstname, empMiddlename, empLastname]
+            .filter(name => name && name.trim() !== "")
+            .join(" ");
+        cy.log("Employee name: " + employeeName)
         this.employeeNameTbx.type(employeeName);
     }
 
     enterAndSelectEmployeeName(employeeFirstName: string, employeeMiddleName: string, employeeLastName: string) {
-        const employeeName = `${employeeFirstName} ${employeeMiddleName} ${employeeLastName}`;
-        this.employeeNameTbx.type(employeeFirstName);
-        this.searchEmployeeList().contains('Searching...').should('not.exist');
-        this.searchEmployeeList().each((employee) => {
-            cy.wrap(employee).then(($el) => {
-                const text = $el.text().trim();
-                if (text === 'No Records found') {
-                    return;
-                } else if (text === employeeName) {
-                    cy.wrap($el).click();
-                }
+        let employeeName = `${employeeFirstName} ${employeeMiddleName} ${employeeLastName}`;
+        employeeName = employeeName.trim();
+
+        if (employeeName !== "") {
+            this.employeeNameTbx.type(employeeFirstName);
+            this.searchEmployeeList().contains('Searching...').should('not.exist');
+            this.searchEmployeeList().each((employee) => {
+                cy.wrap(employee).then(($el) => {
+                    const text = $el.text().trim();
+                    if (text === 'No Records found') {
+                        return;
+                    } else if (text === employeeName) {
+                        cy.wrap($el).click();
+                        this.searchEmployeeList().should('not.exist');
+                    }
+                });
             });
-        });
+        } else {
+            cy.log('No employee name selected');
+            return;
+        }
+
     }
     selectJobTitle(jobTitle: string) {
         if (jobTitle !== "") {
@@ -110,69 +126,60 @@ export class DirectoryPage extends BasePage {
         });
     }
 
-    verifyNumberOfDirectoryCardsShouldBe(expectedNumberCard: number,) {
-        const scrollUntilDone = (prevLength = 0) => {
-            this.directoryCards().then($cards => {
-                const currentLength = $cards.length;
+    verifyNumberOfDirectoryCardsShouldBe(expectedNumberCard: number) {
+        const scrollAndWait = () => {
+            this.searchResultsContainer()
+                .scrollTo('bottom', { ensureScrollable: false });
 
-                if (currentLength === expectedNumberCard) {
-                    return;
-                }
-
-                if (currentLength > prevLength) {
-                    this.searchResultsContainer()
-                        .scrollTo('bottom', { ensureScrollable: false });
-
-                    cy.wait(5000);
-                    scrollUntilDone(currentLength);
-                }
-            });
+            this.directoryCards()
+                .find(this.employeeNameInDirectoryCard)
+                .should('have.length.at.least', expectedNumberCard);
         };
 
-        scrollUntilDone();
+        scrollAndWait();
 
         this.directoryCards()
+            .find(this.employeeNameInDirectoryCard)
             .should('have.length', expectedNumberCard);
     }
-    verifyDirectoryCardInfoShouldBeCorrect(expectedSearchResults: Array<{ employeeFullName: string, subTitle: string, department: string, location: string }>) {
-        const actualSearchResults: Array<{ employeeFullName: string, subTitle: string, department: string, location: string }> = [];
+    verifyDirectoryCardInfoShouldBeCorrect(expectedSearchResults: DirectoryEmployee[]) {
+        const actualSearchResults: DirectoryEmployee[] = [];
 
         return this.directoryCards().each((card) => {
-            cy.wrap(card).find(this.employeeNameInDirectoryCard).invoke('text').then((employeeFullName) => {
-                cy.wrap(card).find(this.subTitleInDirectoryCard).invoke('text').then((subTitle) => {
-                    cy.wrap(card).find(this.locationInDirectoryCard).first().invoke('text').then((department) => {
-                        cy.wrap(card).find(this.locationInDirectoryCard).last().invoke('text').then((location) => {
-                            employeeFullName = employeeFullName.trim();
-                            subTitle = subTitle.trim();
-                            department = department.trim();
-                            location = location.trim();
-                            actualSearchResults.push({
-                                employeeFullName,
-                                subTitle,
-                                department,
-                                location
-                            });
-                            console.log(actualSearchResults)
-                            console.log(expectedSearchResults)
-                        });
-                    });
-                });
-            });
+            const empFullname = Cypress.$(card).find(this.employeeNameInDirectoryCard).text().trim();
+            const subTitle = Cypress.$(card).find(this.subTitleInDirectoryCard).text().trim();
+            const department = Cypress.$(card).find(this.locationInDirectoryCard).first().text().trim();
+            const location = Cypress.$(card).find(this.locationInDirectoryCard).last().text().trim();
+            actualSearchResults.push({ empFullname, subTitle, department, location });
         }).then(() => {
-            expect(actualSearchResults).to.deep.equal(expectedSearchResults);
+            const actual = this.sortEmployees(actualSearchResults);
+            const expected = this.sortEmployees(expectedSearchResults);
+            expect(actual).to.deep.equal(expected);
         });
     }
 
-    verifyAllDirectoryCardsShouldHaveJobTitle(jobTitle: string) {
-        this.directoryCards().each((card) => {
-            cy.wrap(card).find(this.subTitleInDirectoryCard).should('contain.text', jobTitle);
-        });
-    }
+    /** Normalizer + sorter helper */
+    normalizeEmployee = (e: DirectoryEmployee) => ({
+        fullName: utils.normalizeStringType(e.empFullname),
+        jobTitle: e.subTitle.trim(),
+        department: e.department !== null ? e.department.trim() : null,
+        location: e.location.trim()
+    });
 
-    verifyAllDirectoryCardsShouldHaveLocation(location: string) {
-        this.directoryCards().each((card) => {
-            cy.wrap(card).find(this.locationInDirectoryCard).last().should('contain.text', location);
-        });
+    sortEmployees = (arr: DirectoryEmployee[]) => {
+        if (!Array.isArray(arr)) {
+            throw new Error(`sortEmployees expected array but got: ${typeof arr}`);
+        }
+
+        return arr
+            .map(this.normalizeEmployee)
+            .sort((a, b) =>
+                `${a.fullName}|${a.jobTitle}|${a.department}|${a.location}`
+                    .localeCompare(
+                        `${b.fullName}|${b.jobTitle}|${b.department}|${b.location}`
+                    )
+            );
+
     }
 }
 export const directoryPage = new DirectoryPage();

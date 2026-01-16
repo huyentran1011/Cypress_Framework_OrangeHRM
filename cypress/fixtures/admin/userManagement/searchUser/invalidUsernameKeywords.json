@@ -1,0 +1,58 @@
+[
+    {
+        "testName": "Searching with username is not existed",
+        "inputData": {
+            "username": "Leah0909",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        },
+         "expectedResult": {
+            "numberRecordsFound": 0
+        }
+    },
+    {
+        "testName": "Searching with username is asterisk",
+        "inputData": {
+            "username": "*****",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        },
+         "expectedResult": {
+            "numberRecordsFound": 0
+        }
+    },
+    {
+        "testName": "Searching with username is special charcaters",
+        "inputData": {
+            "username": "!@#$%^",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        },
+         "expectedResult": {
+            "numberRecordsFound": 0
+        }
+    },
+    {
+        "testName": "Searching with username is number",
+        "inputData": {
+            "username": "734563",
+            "userRole": "",
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": "",
+            "status": ""
+        },
+        "expectedResult": {
+            "numberRecordsFound": 0
+        }
+    }
+]

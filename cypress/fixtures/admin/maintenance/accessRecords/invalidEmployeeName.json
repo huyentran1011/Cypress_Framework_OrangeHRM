@@ -1,0 +1,26 @@
+[
+    {
+        "testName": "Search with blank Employee",
+        "inputData": {
+            "employeeFirstName": "",
+            "employeeMiddleName": "",
+            "employeeLastName": ""
+        },
+        "expectedResult": {
+            "errorMsg": "Required",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    },
+    {
+        "testName": "Search with invalid Employeename",
+        "inputData": {
+            "employeeFirstName": "Mailisa",
+            "employeeMiddleName": "",
+            "employeeLastName": "Woods"
+        },
+        "expectedResult": {
+            "errorMsg": "Invalid",
+            "textColor": "rgb(235, 9, 16)"
+        }
+    }
+]

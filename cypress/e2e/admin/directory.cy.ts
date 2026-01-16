@@ -1,99 +1,75 @@
 import { directoryPage } from "../../pages/admin/DirectoryPage.ts";
-import { loginPage } from "../../pages/LoginPage.ts";
 import { navigationBar } from "../../pages/NavigationBar.ts";
+import { queryDirectoryEmployee } from "../../support/database/employee/employee.db.ts";
+import type { DirectoryEmployee } from "../../support/database/employee/employee.types.ts";
+import validSearchKeyword from "../../fixtures/admin/directory/validSearchKeywords.json" with {type: "json"};
+import invalidSearchKeyword from "../../fixtures/admin/directory/invalidSearchKeywords.json" with {type: "json"};
+
+
 
 describe('Admin - Directory Page', () => {
-    const username = 'automationfc';
-    const password = 'orangehrm5@X';
     const menuItem = 'Directory';
     const pageHeader = 'Directory';
 
-    const errorMsgColor = 'rgb(235, 9, 16)';
-    const employeeNameErrorMsg = 'Invalid';
-
-
     beforeEach(() => {
-        loginPage.loginToSystem(username, password);
+        cy.loginAsAdmin();
         navigationBar.clickMenuItem(menuItem);
     })
 
     it('Verify Directory Page header', () => {
         directoryPage.verifyPageHeaderShouldBe(pageHeader);
     })
+    invalidSearchKeyword.forEach((testCase: any) => {
+        it(`Test Cases - ${testCase.testName}`, () => {
+            /** Input Data */
+            const empFirstname = testCase.inputData.employeeFirstName;
+            const empMiddlename = testCase.inputData.employeeMiddleName;
+            const empLastname = testCase.inputData.employeeLastName;
+            const jobTitle = testCase.inputData.jobTitle;
+            const location = testCase.inputData.location;
+            /** Expected Data */
+            const employeeNameErrorMsg = testCase.expectedResult.errorMessage;
+            const errorMsgColor = testCase.expectedResult.textColor;
 
-    it('Search with invalid employee name', () => {
-        const invalidEmployeeName = 'John Wick';
-        const jobTitle = 'Java Developer';
-        const location = 'Dallas Branch';
-        directoryPage.enterEmployeeName(invalidEmployeeName);
-        directoryPage.selectJobTitle(jobTitle);
-        directoryPage.selectLocation(location);
-        directoryPage.clickSearchButton();
-        directoryPage.verifyEmployeeErrorMessage(employeeNameErrorMsg);
-        directoryPage.verifyEmployeeErrorMsgColor(errorMsgColor);
-    })
+            /** Test Steps */
+            directoryPage.enterEmployeeName(empFirstname, empMiddlename, empLastname);
+            directoryPage.selectJobTitle(jobTitle);
+            directoryPage.selectLocation(location);
+            directoryPage.clickSearchButton();
 
-    it('Search with only Job Titles', () => {
-        const jobTitle = 'Java Developer';
-        const numberOfExpectedRecords = 4;
+            /** Verification Steps */
+            directoryPage.verifyEmployeeErrorMessage(employeeNameErrorMsg);
+            directoryPage.verifyEmployeeErrorMsgColor(errorMsgColor);
 
-        directoryPage.selectJobTitle(jobTitle);
-        directoryPage.clickSearchButton();
-        directoryPage.verifyNumberRecordFoundMessageShouldBeCorrect(numberOfExpectedRecords);
-        directoryPage.verifyNumberOfDirectoryCardsShouldBe(numberOfExpectedRecords);
-        directoryPage.verifyAllDirectoryCardsShouldHaveJobTitle(jobTitle);
-    })
+            /** Reset Search Page */
+            directoryPage.clickResetButton();
+        });
+    });
 
+    validSearchKeyword.forEach((testCase: any) => {
+        it(`Test Cases - ${testCase.testName}`, () => {
+            /** Input Data */
+            const empFirstname = testCase.inputData.employeeFirstName;
+            const empMiddlename = testCase.inputData.employeeMiddleName;
+            const empLastname = testCase.inputData.employeeLastName;
+            const jobTitle = testCase.inputData.jobTitle;
+            const location = testCase.inputData.location;
 
-    it('Search with only Location', () => {
-        const location = 'Dallas Branch';
-        const numberOfExpectedRecords = 30;
+            /** Test Steps */
+            directoryPage.enterAndSelectEmployeeName(empFirstname, empMiddlename, empLastname);
+            directoryPage.selectJobTitle(jobTitle);
+            directoryPage.selectLocation(location);
+            directoryPage.clickSearchButton();
 
-        directoryPage.selectLocation(location);
-        directoryPage.clickSearchButton();
-        directoryPage.verifyNumberRecordFoundMessageShouldBeCorrect(numberOfExpectedRecords);
-        directoryPage.verifyNumberOfDirectoryCardsShouldBe(numberOfExpectedRecords);
-        directoryPage.verifyAllDirectoryCardsShouldHaveLocation(location);
-    })
+            /** Verification Steps */
+            queryDirectoryEmployee(empFirstname, empMiddlename, empLastname, jobTitle, location).then((result: DirectoryEmployee[]) => {
+                directoryPage.verifyNumberRecordFoundMessageShouldBeCorrect(result.length);
+                directoryPage.verifyNumberOfDirectoryCardsShouldBe(result.length);
+                directoryPage.verifyDirectoryCardInfoShouldBeCorrect(result);
+            })
 
-    it('Search with only valid Employee Name', () => {
-        const validEmployeeFirstName = 'Andrew';
-        const validEmployeeMiddleName = '';
-        const validEmployeeLastName = 'Anderson';
-        const searchResult = [{
-            employeeFullName: "Andrew  Anderson",
-            subTitle: 'Sales',
-            department: 'DC3',
-            location: 'Dallas Branch'
-        }]
-
-        directoryPage.enterAndSelectEmployeeName(validEmployeeFirstName, validEmployeeMiddleName, validEmployeeLastName);
-        directoryPage.clickSearchButton();
-        directoryPage.verifyNumberRecordFoundMessageShouldBeCorrect(searchResult.length);
-        directoryPage.verifyNumberOfDirectoryCardsShouldBe(searchResult.length);
-        directoryPage.verifyDirectoryCardInfoShouldBeCorrect(searchResult);
-    })
-
-    it('Search with only valid Employee Name, subTitle and Location', () => {
-        const validEmployeeFirstName = 'Andrew';
-        const validEmployeeMiddleName = '';
-        const validEmployeeLastName = 'Anderson';
-        const jobTitle = 'Sales';
-        const location = 'Dallas Branch';
-
-        const searchResult = [{
-            employeeFullName: "Andrew  Anderson",
-            subTitle: 'Sales',
-            department: 'DC3',
-            location: 'Dallas Branch'
-        }]
-
-        directoryPage.enterAndSelectEmployeeName(validEmployeeFirstName, validEmployeeMiddleName, validEmployeeLastName);
-        directoryPage.selectJobTitle(jobTitle);
-        directoryPage.selectLocation(location);
-        directoryPage.clickSearchButton();
-        directoryPage.verifyNumberRecordFoundMessageShouldBeCorrect(searchResult.length);
-        directoryPage.verifyNumberOfDirectoryCardsShouldBe(searchResult.length);
-        directoryPage.verifyDirectoryCardInfoShouldBeCorrect(searchResult);
+            /** Reset Search Page */
+            directoryPage.clickResetButton();
+        })
     })
 })

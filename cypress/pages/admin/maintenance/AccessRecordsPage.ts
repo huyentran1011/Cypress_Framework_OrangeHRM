@@ -1,8 +1,8 @@
-import { BasePage } from "../BasePage.ts";
-import { Textbox } from "../../components/Textbox.ts";
-import { Button } from "../../components/Button.ts";
+import { BasePage } from "../../BasePage.ts";
+import { Textbox } from "../../../components/Textbox.ts";
+import { Button } from "../../../components/Button.ts";
 
-export class MaintenancePage extends BasePage {
+export class AccessRecordsPage extends BasePage {
     //** COMPONENT LOCATORS */  
     employeeNameTbx = new Textbox('Employee Name');
     searchBtn = new Button('Search');
@@ -31,7 +31,7 @@ export class MaintenancePage extends BasePage {
     }
 
     private searchEmployeeList() {
-        return cy.get('div[role="option"]').children('span');
+        return cy.get('div[role="option"]');
     }
 
     //** ACTIONS */
@@ -40,12 +40,45 @@ export class MaintenancePage extends BasePage {
         this.accessRecordsTab().click();
     }
 
-    enterEmployeeName(employeeName: string) {
-        this.employeeNameTbx.type(employeeName);
-    }
-
     selectEmployeeFromList(employeeName: string) {
         this.searchEmployeeList().contains(employeeName).click();
+    }
+
+    enterEmployeeName(empFirstname: string, empMiddlename: string, empLastname: string) {
+        const employeeName = [empFirstname, empMiddlename, empLastname]
+            .filter(name => name && name.trim() !== "")
+            .join(" ");
+        cy.log("Employee name: " + employeeName)
+        if (employeeName !== "") {
+            this.employeeNameTbx.type(employeeName);
+        } else {
+            cy.log('No Employee Name inputted');
+            return;
+        }
+    }
+
+    enterAndSelectEmployeeName(employeeFirstName: string, employeeMiddleName: string, employeeLastName: string) {
+        let employeeName = `${employeeFirstName} ${employeeMiddleName} ${employeeLastName}`;
+        employeeName = employeeName.trim();
+
+        if (employeeName !== "") {
+            this.employeeNameTbx.type(employeeFirstName);
+            this.searchEmployeeList().contains('Searching...').should('not.exist');
+            this.searchEmployeeList().each((employee) => {
+                cy.wrap(employee).then(($el) => {
+                    const text = $el.text().trim();
+                    if (text === 'No Records found') {
+                        return;
+                    } else if (text === employeeName) {
+                        cy.wrap($el).click();
+                        this.searchEmployeeList().should('not.exist');
+                    }
+                });
+            });
+        } else {
+            cy.log('No employee name selected');
+            return;
+        }
     }
 
     clickSearchButton() {
@@ -110,7 +143,14 @@ export class MaintenancePage extends BasePage {
         this.employeeIdTbx.shouldNotBeExist();
     }
 
+    verifyEmployeeNameErrorMessage(errorMessage: string) {
+        return this.employeeNameTbx.shouldHaveErrorMessage(errorMessage);
+    }
+
+    verifyEmployeeNameErrorMsgColor(value: string) {
+        return this.employeeNameTbx.shouldErrorMessageColor(value);
+    }
 
 }
 
-export const maintenancePage = new MaintenancePage();
+export const accessRecordsPage = new AccessRecordsPage();
